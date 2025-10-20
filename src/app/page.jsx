@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "./lib/supabaseClient";
+import HomePage from "./home/page.jsx";
 
 export default function Home() {
   const router = useRouter();
@@ -11,7 +12,6 @@ export default function Home() {
   useEffect(() => {
     const checkUser = async () => {
       const { data: { user } } = await supabase.auth.getUser()
-      console.log(user);
       
       if (user) {
         setUser(user);
@@ -23,26 +23,13 @@ export default function Home() {
     checkUser()
   }, [router])
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    router.push("/login");
-  };
-
   if (loading) {
     return <p style={{ textAlign: "center", marginTop: 50 }}>Loading...</p>;
   }
 
   return (
-    <div style={{ textAlign: "center", marginTop: "100px" }}>
-      {user && (
-        <>
-          <h1>Welcome,  👋</h1>
-          <p>You are logged in as {user.email}</p>
-          <button onClick={handleLogout} style={{ marginTop: 20, padding: "8px 16px" }}>
-            Logout
-          </button>
-        </>
-      )}
+    <div>
+      {!loading && user && <HomePage user={user} />}
     </div>
   );
 }

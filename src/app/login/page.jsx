@@ -24,7 +24,7 @@ export default function LoginPage() {
     }
 
     if (data?.user) {
-      router.push("/home");
+      router.push("/");
     } else {
       alert("Login failed");
     }
