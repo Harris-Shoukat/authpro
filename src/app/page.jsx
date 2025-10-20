@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "./lib/supabaseClient";
-import HomePage from "./home/page.jsx";
+import HomePage from "./screens/home/page.jsx";
+import supabase from "./lib/supabaseClient.js";
 
 export default function Home() {
   const router = useRouter();

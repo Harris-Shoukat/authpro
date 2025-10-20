@@ -23,7 +23,7 @@ const Navbar = () => {
     >
       <div style={styles.navbarLeft}>
         <Link href="/" style={styles.logo}>
-          Pet.<span style={{ color: "#16ad20ff" }}>Co</span>
+          Auth.<span style={{ color: "#16ad20ff" }}>Pro</span>
         </Link>
       </div>
       <div style={styles.navbarCenter}>
@@ -32,13 +32,13 @@ const Navbar = () => {
           <Link href="/" style={styles.navLink}>
               Home
             </Link>
-            <Link href="/about" style={styles.navLink}>
+            <Link href="/screens/about" style={styles.navLink}>
               About
             </Link>
-            <Link href="/category" style={styles.navLink}>
+            <Link href="/screens/category" style={styles.navLink}>
               Category
             </Link>
-            <Link href="/career" style={styles.navLink}>
+            <Link href="/screens/career" style={styles.navLink}>
               Career
             </Link>
           </>
@@ -55,18 +55,18 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {screenWidth <= 428 && isMenuOpen && (
         <div style={styles.mobileMenuFull}>
-          <Link href="/about" style={styles.mobileNavLink} onClick={toggleMenu}>
+          <Link href="/screens/about" style={styles.mobileNavLink} onClick={toggleMenu}>
             About
           </Link>
           <Link
-            href="/category"
+            href="/screens/category"
             style={styles.mobileNavLink}
             onClick={toggleMenu}
           >
             Category
           </Link>
           <Link
-            href="/career"
+            href="/screens/career"
             style={styles.mobileNavLink}
             onClick={toggleMenu}
           >
