@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Menu, User } from "lucide-react";
+import { Menu, User, Home, Info, LayoutGrid, Briefcase } from "lucide-react";
 import { useState } from "react";
 import useScreenWidth from "../utils/useScreenWidth";
 
@@ -56,30 +56,37 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {screenWidth <= 428 && isMenuOpen && (
         <div style={styles.mobileMenuFull}>
+          <Link href="/" style={styles.mobileNavLink} onClick={toggleMenu}>
+            <Home /> Home
+          </Link>
           <Link
             href="/about"
             style={styles.mobileNavLink}
             onClick={toggleMenu}
           >
-            About
+            <Info /> About
           </Link>
           <Link
             href="/category"
             style={styles.mobileNavLink}
             onClick={toggleMenu}
           >
-            Category
+            <LayoutGrid /> Category
           </Link>
           <Link
             href="/career"
             style={styles.mobileNavLink}
             onClick={toggleMenu}
           >
-            Career
+            <Briefcase /> Career
           </Link>
-          <div style={{ marginTop: 12 }} onClick={toggleMenu}>
-            <User />
-          </div>
+          <Link
+            href="/profile"
+            style={styles.mobileNavLink}
+            onClick={toggleMenu}
+          >
+            <User /> Profile
+          </Link>
         </div>
       )}
     </nav>
@@ -140,9 +147,12 @@ const styles = {
   mobileMenuFull: {
     position: "absolute",
     top: "60px",
-    left: 0,
+    // left: 0,
     right: 0,
-    backgroundColor: "#222",
+    // backgroundColor: "#6f3636ff",
+    backgroundColor: "#097611ff",
+    minWidth: "50%",
+    height: "100vh",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -155,9 +165,13 @@ const styles = {
     fontSize: "1rem",
     textDecoration: "none",
     color: "white",
-    padding: "0.5rem 0",
+    padding: "1rem 0",
     width: "100%",
     textAlign: "center",
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+    justifyContent: "center",
   },
 };
 
