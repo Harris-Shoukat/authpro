@@ -29,16 +29,16 @@ const Navbar = () => {
       <div style={styles.navbarCenter}>
         {screenWidth > 428 ? (
           <>
-          <Link href="/" style={styles.navLink}>
+            <Link href="/" style={styles.navLink}>
               Home
             </Link>
-            <Link href="/screens/about" style={styles.navLink}>
+            <Link href="/about" style={styles.navLink}>
               About
             </Link>
-            <Link href="/screens/category" style={styles.navLink}>
+            <Link href="/category" style={styles.navLink}>
               Category
             </Link>
-            <Link href="/screens/career" style={styles.navLink}>
+            <Link href="/career" style={styles.navLink}>
               Career
             </Link>
           </>
@@ -46,7 +46,8 @@ const Navbar = () => {
       </div>
       <div style={styles.navbarRight}>
         {screenWidth > 428 ? (
-          <Link href="/profile" style={styles.navLink}><User />
+          <Link href="/profile" style={styles.navLink}>
+            <User />
           </Link>
         ) : (
           <Menu onClick={toggleMenu} />
@@ -55,18 +56,22 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {screenWidth <= 428 && isMenuOpen && (
         <div style={styles.mobileMenuFull}>
-          <Link href="/screens/about" style={styles.mobileNavLink} onClick={toggleMenu}>
+          <Link
+            href="/about"
+            style={styles.mobileNavLink}
+            onClick={toggleMenu}
+          >
             About
           </Link>
           <Link
-            href="/screens/category"
+            href="/category"
             style={styles.mobileNavLink}
             onClick={toggleMenu}
           >
             Category
           </Link>
           <Link
-            href="/screens/career"
+            href="/career"
             style={styles.mobileNavLink}
             onClick={toggleMenu}
           >
@@ -131,8 +136,6 @@ const styles = {
     padding: "1rem",
     borderRadius: "10px",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-    
-
   },
   mobileMenuFull: {
     position: "absolute",
