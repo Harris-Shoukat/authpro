@@ -7,13 +7,13 @@ const HomePage = () => {
     <div style={styles.container}>
       <div style={styles.textContainer}>
         <h1 style={styles.title}>
-          Welcome to <span style={{ color: "#16ad20ff" }}>Auth.Pro</span>
+          Welcome to <span style={{ color: "var(--coregreen)" }}>Auth.Pro</span>
         </h1>
         <p style={styles.subtitle}>
           The most secure and reliable authentication solution for your
           business.
         </p>
-        <Link href="/screens/category" style={styles.ctaButton}>
+        <Link href="/category" style={styles.ctaButton}>
           Explore Our Solutions
         </Link>
       </div>
@@ -35,10 +35,12 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    minHeight: "100vh",
+    minHeight: "calc(100vh - 100px)",
     padding: "0 2rem",
     backgroundColor: "var(--background)",
     color: "var(--foreground)",
+    maxWidth: "80%",
+    margin: "0 auto",
   },
   textContainer: {
     flex: 1,
@@ -72,6 +74,7 @@ const styles = {
   image: {
     maxWidth: "100%",
     height: "auto",
+    color: "var(--coregreen)",
   },
 };
 

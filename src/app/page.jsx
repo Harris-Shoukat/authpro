@@ -25,7 +25,7 @@ export default function Home() {
   }, [router])
 
   if (loading) {
-    return <p style={{ textAlign: "center", marginTop: 50 }}>Loading...</p>;
+    return <p style={{ textAlign: "center", marginTop: 50 }}>Loading...</p>
   }
 
   return (

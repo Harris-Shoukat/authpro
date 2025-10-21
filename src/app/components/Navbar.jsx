@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Menu, User, Home, Info, LayoutGrid, Briefcase } from "lucide-react";
+import { Menu, User, Home, Info, LayoutGrid, Briefcase, ClosedCaption, X } from "lucide-react";
 import { useState } from "react";
 import useScreenWidth from "../utils/useScreenWidth";
 
@@ -23,7 +23,7 @@ const Navbar = () => {
     >
       <div style={styles.navbarLeft}>
         <Link href="/" style={styles.logo}>
-          Auth.<span style={{ color: "#16ad20ff" }}>Pro</span>
+          Auth.<span style={{ color: "var(--coregreen)" }}>Pro</span>
         </Link>
       </div>
       <div style={styles.navbarCenter}>
@@ -50,42 +50,45 @@ const Navbar = () => {
             <User />
           </Link>
         ) : (
-          <Menu onClick={toggleMenu} />
+          <>
+            {isMenuOpen ? (
+              <X onClick={toggleMenu} />
+            ) : (
+              <Menu onClick={toggleMenu} />
+            )}
+          </>
         )}
       </div>
       {/* Mobile Menu */}
       {screenWidth <= 428 && isMenuOpen && (
         <div style={styles.mobileMenuFull}>
           <Link href="/" style={styles.mobileNavLink} onClick={toggleMenu}>
-            <Home /> Home
+            <Home /> <span style={styles.mobileNavLinkText}>Home</span>
           </Link>
-          <Link
-            href="/about"
-            style={styles.mobileNavLink}
-            onClick={toggleMenu}
-          >
-            <Info /> About
+          <Link href="/about" style={styles.mobileNavLink} onClick={toggleMenu}>
+            <Info /> <span style={styles.mobileNavLinkText}>About</span>
           </Link>
           <Link
             href="/category"
             style={styles.mobileNavLink}
             onClick={toggleMenu}
           >
-            <LayoutGrid /> Category
+            <LayoutGrid />{" "}
+            <span style={styles.mobileNavLinkText}>Category</span>
           </Link>
           <Link
             href="/career"
             style={styles.mobileNavLink}
             onClick={toggleMenu}
           >
-            <Briefcase /> Career
+            <Briefcase /> <span style={styles.mobileNavLinkText}>Career</span>
           </Link>
           <Link
             href="/profile"
             style={styles.mobileNavLink}
             onClick={toggleMenu}
           >
-            <User /> Profile
+            <User /> <span style={styles.mobileNavLinkText}>Profile</span>
           </Link>
         </div>
       )}
@@ -131,25 +134,10 @@ const styles = {
     display: "flex",
     justifyContent: "flex-end",
   },
-  mobileMenu: {
-    position: "absolute",
-    top: "70px",
-    left: "10%",
-    right: "10%",
-    backgroundColor: "#222",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    padding: "1rem",
-    borderRadius: "10px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-  },
   mobileMenuFull: {
     position: "absolute",
     top: "60px",
-    // left: 0,
     right: 0,
-    // backgroundColor: "#6f3636ff",
     backgroundColor: "#097611ff",
     minWidth: "50%",
     height: "100vh",
@@ -167,11 +155,15 @@ const styles = {
     color: "white",
     padding: "1rem 0",
     width: "100%",
-    textAlign: "center",
     display: "flex",
     alignItems: "center",
-    gap: "10px",
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    paddingLeft: "1rem",
+    paddingRight: "1rem",
+  },
+  mobileNavLinkText: {
+    marginLeft: "0px",
+    paddingLeft: "20px",
   },
 };
 

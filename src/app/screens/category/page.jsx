@@ -46,11 +46,17 @@ const CategoryPage = () => {
 
 const styles = {
   container: {
-    minHeight: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: "calc(100vh - 100px)",
     padding: "2rem",
     backgroundColor: "var(--background)",
     color: "var(--foreground)",
     textAlign: "center",
+    maxWidth: "80%",
+    margin: "0 auto",
   },
   title: {
     fontSize: "3rem",

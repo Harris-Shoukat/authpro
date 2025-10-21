@@ -34,10 +34,12 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    minHeight: "100vh",
+    minHeight: "calc(100vh - 100px)",
     padding: "0 2rem",
     backgroundColor: "var(--background)",
     color: "var(--foreground)",
+    maxWidth: "80%",
+    margin: "0 auto",
   },
   textContainer: {
     flex: 1,
