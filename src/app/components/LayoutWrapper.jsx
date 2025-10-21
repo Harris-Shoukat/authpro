@@ -5,12 +5,15 @@ import Navbar from './Navbar';
 
 const LayoutWrapper = ({ children }) => {
   const pathname = usePathname();
-  console.log("Current pathname:", pathname);
-  const showNavbar = pathname !== '/login' && pathname !== '/signup';
+
+  // Define the paths where Navbar should NOT appear
+  const hideNavbarPaths = ['/login', '/signup','/screens/login', '/screens/signup'];
+
+  const shouldShowNavbar = !hideNavbarPaths.includes(pathname);
 
   return (
     <>
-      {showNavbar && <Navbar />}
+      {shouldShowNavbar && <Navbar />}
       {children}
     </>
   );
