@@ -1,7 +1,10 @@
-
+"use client";
 import Image from "next/image";
+import { useTheme } from "../context/ThemeContext"; // Import the theme hook
 
 const CareerPage = () => {
+  const { theme } = useTheme(); // Use theme context
+
   const openPositions = [
     {
       title: "Frontend Developer",
@@ -24,18 +27,18 @@ const CareerPage = () => {
   ];
 
   return (
-    <div style={styles.container}>
+    <div style={styles.container(theme)}>
       <div style={styles.textContainer}>
-        <h1 style={styles.title}>Career Opportunities</h1>
-        <p style={styles.subtitle}>
+        <h1 style={styles.title(theme)}>Career Opportunities</h1>
+        <p style={styles.subtitle(theme)}>
           Join our team and help us build the future of authentication.
         </p>
         <div style={styles.positionsContainer}>
           {openPositions.map((position, index) => (
-            <div key={index} style={styles.positionCard}>
-              <h2 style={styles.positionTitle}>{position.title}</h2>
-              <p style={styles.positionLocation}>{position.location}</p>
-              <p style={styles.positionDescription}>{position.description}</p>
+            <div key={index} style={styles.positionCard(theme)}>
+              <h2 style={styles.positionTitle(theme)}>{position.title}</h2>
+              <p style={styles.positionLocation(theme)}>{position.location}</p>
+              <p style={styles.positionDescription(theme)}>{position.description}</p>
             </div>
           ))}
         </div>
@@ -46,7 +49,7 @@ const CareerPage = () => {
           alt="Career Opportunities"
           width={500}
           height={500}
-          style={styles.image}
+          style={styles.image(theme)}
         />
       </div>
     </div>
@@ -54,66 +57,71 @@ const CareerPage = () => {
 };
 
 const styles = {
-  container: {
+  container: (theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     minHeight: "calc(100vh - 100px)",
     padding: "0 2rem",
-    backgroundColor: "var(--background)",
-    color: "var(--foreground)",
+    backgroundColor: theme === "dark" ? "#181818" : "#f5f5f5",
+    color: theme === "dark" ? "#fff" : "#000",
     maxWidth: "80%",
     margin: "0 auto",
-  },
+  }),
   textContainer: {
     flex: 1,
     maxWidth: "800px",
   },
-  title: {
+  title: (theme) => ({
     fontSize: "3rem",
     fontWeight: "bold",
     marginBottom: "1rem",
-  },
-  subtitle: {
+    color: theme === "dark" ? "#fff" : "#000",
+  }),
+  subtitle: (theme) => ({
     fontSize: "1.5rem",
     marginBottom: "2rem",
-  },
+    color: theme === "dark" ? "#aaa" : "#666",
+  }),
   positionsContainer: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
     gap: "1rem",
   },
-  positionCard: {
-    backgroundColor: "var(--background)",
+  positionCard: (theme) => ({
+    backgroundColor: theme === "dark" ? "#222" : "#fff",
     padding: "2rem",
     borderRadius: "10px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    border: "1px solid var(--foreground)",
-  },
-  positionTitle: {
+    boxShadow: theme === "dark" ? "0 4px 8px rgba(0, 0, 0, 0.3)" : "0 4px 8px rgba(0, 0, 0, 0.1)",
+    border: `1px solid ${theme === "dark" ? "#555" : "#ccc"}`,
+  }),
+  positionTitle: (theme) => ({
     fontSize: "1.5rem",
     fontWeight: "bold",
     marginBottom: "0.5rem",
-  },
-  positionLocation: {
+    color: theme === "dark" ? "#fff" : "#000",
+  }),
+  positionLocation: (theme) => ({
     fontSize: "1rem",
-    color: "#666",
+    color: theme === "dark" ? "#aaa" : "#666",
     marginBottom: "1rem",
-  },
-  positionDescription: {
+  }),
+  positionDescription: (theme) => ({
     fontSize: "1rem",
     lineHeight: "1.5",
-  },
+    color: theme === "dark" ? "#fff" : "#000",
+  }),
   imageContainer: {
     flex: 1,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
   },
-  image: {
+  image: (theme) => ({
     maxWidth: "100%",
     height: "auto",
-  },
+    color: theme === "dark" ? "#00ff00" : "#00cc00", // Matches --coregreen
+  }),
 };
 
 export default CareerPage;

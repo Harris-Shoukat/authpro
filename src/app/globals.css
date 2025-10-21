@@ -4,6 +4,25 @@
   --coregreen: #16ad20ff;
 }
 
+/* globals.css */
+:root[data-theme="dark"] {
+  --background: #181818;
+  --text: #ffffff;
+  --input-bg: #333333;
+  --input-border: #555555;
+  --button-bg: #303030;
+  --toggle-bg: #444444;
+}
+
+:root[data-theme="light"] {
+  --background: #f5f5f5;
+  --text: #000000;
+  --input-bg: #ffffff;
+  --input-border: #cccccc;
+  --button-bg: #0070f3;
+  --toggle-bg: #dddddd;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
