@@ -2,17 +2,20 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import supabase from "../../lib/supabaseClient";
+import supabase from "../lib/supabaseClient";
 import { Eye, EyeOff } from "lucide-react";
+import { Ellipsis } from "react-css-spinners";
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e, email, password) => {
     e.preventDefault();
+    setLoading(true);
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
@@ -21,6 +24,7 @@ export default function LoginPage() {
 
     if (error) {
       alert(error.message || "Invalid email or password");
+      setLoading(false);
       return;
     }
 
@@ -28,6 +32,7 @@ export default function LoginPage() {
       router.push("/");
     } else {
       alert("Login failed");
+      setLoading(false);
     }
   };
 
@@ -67,15 +72,26 @@ export default function LoginPage() {
               style={styles.input}
             />
             <div
-              style={{ position: "absolute", right: 10, top: 18, cursor: "pointer" }}
+              style={{
+                position: "absolute",
+                right: 10,
+                top: 18,
+                cursor: "pointer",
+              }}
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? <Eye /> : <EyeOff />}
             </div>
           </div>
-          <button type="submit" className="auth-button">
-            Login
-          </button>
+          {loading ? (
+            <div style={styles.button}>
+              <Ellipsis color="var(--coregreen)" size={40} />
+            </div>
+          ) : (
+            <button type="submit" style={styles.button} className="auth-button">
+              Login
+            </button>
+          )}
         </form>
         <p style={{ marginTop: 10 }}>
           Don’t have an account? <Link href="/signup">Sign up</Link>
@@ -128,5 +144,8 @@ const styles = {
     color: "#fff",
     border: "none",
     cursor: "pointer",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 };

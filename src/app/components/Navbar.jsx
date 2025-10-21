@@ -1,10 +1,39 @@
 "use client";
 import Link from "next/link";
-import { Menu, User, Home, Info, LayoutGrid, Briefcase, ClosedCaption, X } from "lucide-react";
-import { useState } from "react";
+import { Menu, User, Home, Info, LayoutGrid, Briefcase,  X, User2, CircleUser } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import useScreenWidth from "../utils/useScreenWidth";
+import  supabase  from "../lib/supabaseClient";
 
 const Navbar = () => {
+  const [user, setUser] = useState(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const getSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      setUser(session?.user || null);
+    };
+
+    getSession();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUser(session?.user || null);
+      }
+    );
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
+
+  const handleProfileClick = () => {
+    router.push("/profile");
+  };
   const screenWidth = useScreenWidth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -46,9 +75,28 @@ const Navbar = () => {
       </div>
       <div style={styles.navbarRight}>
         {screenWidth > 428 ? (
-          <Link href="/profile" style={styles.navLink}>
-            <User />
-          </Link>
+          user ? (
+            <Link href="/profile" style={styles.navLink}>
+              <CircleUser size={28}/>
+            </Link>
+            // <button onClick={handleProfileClick} style={styles.navLink}>
+            //   <img
+            //     src="/profile.svg"
+            //     alt="Profile"
+            //     style={{ height: "24px", width: "24px", borderRadius: "50%" }}
+            //   />
+            // </button>
+          ) : (
+            <div style={styles.loginSignupContainer}>
+              <Link href="/login" style={styles.loginSignupLink}>
+                Login
+              </Link>
+              <span style={{ color: "white" }}> / </span>
+              <Link href="/signup" style={styles.loginSignupLink}>
+                Sign Up
+              </Link>
+            </div>
+          )
         ) : (
           <>
             {isMenuOpen ? (
@@ -83,13 +131,40 @@ const Navbar = () => {
           >
             <Briefcase /> <span style={styles.mobileNavLinkText}>Career</span>
           </Link>
-          <Link
-            href="/profile"
-            style={styles.mobileNavLink}
-            onClick={toggleMenu}
-          >
-            <User /> <span style={styles.mobileNavLinkText}>Profile</span>
-          </Link>
+          {user ? (
+            <button
+              onClick={() => {
+                handleProfileClick();
+                toggleMenu();
+              }}
+              style={styles.mobileNavLink}
+            >
+              <img
+                src="/profile.svg"
+                alt="Profile"
+                style={{ height: "24px", width: "24px", borderRadius: "50%" }}
+              />{" "}
+              <span style={styles.mobileNavLinkText}>Profile</span>
+            </button>
+          ) : (
+            <div style={styles.mobileLoginSignupContainer}>
+              <Link
+                href="/login"
+                style={styles.mobileLoginSignupLink}
+                onClick={toggleMenu}
+              >
+                Login
+              </Link>
+              <span style={{ color: "white" }}> / </span>
+              <Link
+                href="/signup"
+                style={styles.mobileLoginSignupLink}
+                onClick={toggleMenu}
+              >
+                Sign Up
+              </Link>
+            </div>
+          )}
         </div>
       )}
     </nav>
@@ -133,6 +208,33 @@ const styles = {
     flex: 1,
     display: "flex",
     justifyContent: "flex-end",
+    gap: "1rem",
+  },
+  loginSignupContainer: {
+    display: "flex",
+    alignItems: "center",
+    gap: "5px",
+  },
+  loginSignupLink: {
+    color: "var(--coregreen)",
+    textDecoration: "none",
+    fontSize: "1rem",
+    fontWeight: "bold",
+  },
+  mobileLoginSignupContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "1rem 0",
+    width: "100%",
+  },
+  mobileLoginSignupLink: {
+    color: "var(--coregreen)",
+    textDecoration: "none",
+    fontSize: "1rem",
+    fontWeight: "bold",
+    padding: "0 5px",
   },
   mobileMenuFull: {
     position: "absolute",

@@ -7,13 +7,12 @@ const LayoutWrapper = ({ children }) => {
   const pathname = usePathname();
 
   // Define the paths where Navbar should NOT appear
-  const hideNavbarPaths = ['/login', '/signup','/screens/login', '/screens/signup'];
-
-  const shouldShowNavbar = !hideNavbarPaths.includes(pathname);
+  const showNavbar = 
+  pathname !== '/login' && pathname !== '/signup';
 
   return (
     <>
-      {shouldShowNavbar && <Navbar />}
+      {showNavbar && <Navbar/>}
       {children}
     </>
   );

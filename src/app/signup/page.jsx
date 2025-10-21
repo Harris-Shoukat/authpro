@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import supabase from "../../lib/supabaseClient";
+import supabase from "../lib/supabaseClient";
 import { Eye, EyeOff } from "lucide-react";
 
 export default function SignupPage() {
@@ -24,7 +24,7 @@ export default function SignupPage() {
     }
 
     alert("Signup successful! Check your email to confirm (if required).");
-    router.push("/screens/login");
+    router.push("/login");
   };
 
   return (

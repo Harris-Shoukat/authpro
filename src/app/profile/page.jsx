@@ -1,13 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
-import supabase from "../../lib/supabaseClient";
+import supabase from "../lib/supabaseClient";
 import { useRouter } from "next/navigation";
-import { Pencil } from 'lucide-react';
+import { Pencil } from "lucide-react";
+import { Ellipsis } from "react-css-spinners";
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [phone, setPhone] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -21,7 +23,7 @@ const ProfilePage = () => {
         setUser(user);
         setPhone(user.phone || "");
       } else {
-        router.push("/screens/login");
+        router.push("/");
       }
     };
 
@@ -29,8 +31,10 @@ const ProfilePage = () => {
   }, [router]);
 
   const handleLogout = async () => {
+    setLoading(true);
     await supabase.auth.signOut();
-    router.push("/screens/login");
+    router.push("/");
+    setLoading(false);
   };
 
   const handleUpdatePhone = async () => {
@@ -56,7 +60,7 @@ const ProfilePage = () => {
   const formatSignInTime = (time) => {
     if (!time) return "N/A";
     const date = new Date(time);
-    console.log("dateeeee",date);
+    console.log("dateeeee", date);
     return date.toLocaleString();
   };
 
@@ -79,28 +83,47 @@ const ProfilePage = () => {
                 <strong>Last Sign In:</strong>{" "}
                 {formatSignInTime(user.last_sign_in_at)}
               </div>
-              <div style={{...styles.detailItem, display: "flex", alignItems: "center"}}>
+              <div
+                style={{
+                  ...styles.detailItem,
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
                 <strong>Phone:</strong>
                 <div style={{ marginLeft: "10px", width: "100%" }}>
-                {isEditing ? (
-                  <input
-                    type="text"
-                    value={phone}
-                    onChange={handlePhoneChange}
-                    style={styles.input}
-                  />
-                ) : (
-                  <div style={{ display: "flex", alignItems: "center", flexDirection: "row" }}>
-                    <span>{phone || "N/A"}</span>
-                    <Pencil onClick={toggleEdit} size={20} style={{ cursor: "pointer", marginLeft: "10px" }} />
-                  </div>
-                )}
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={phone}
+                      onChange={handlePhoneChange}
+                      style={styles.input}
+                    />
+                  ) : (
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <span>{phone || "N/A"}</span>
+                      <Pencil
+                        onClick={toggleEdit}
+                        size={20}
+                        style={{ cursor: "pointer", marginLeft: "10px" }}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
               <div style={styles.buttonContainer}>
                 {isEditing && (
                   <>
-                    <button onClick={handleUpdatePhone} style={styles.saveButton}>
+                    <button
+                      onClick={handleUpdatePhone}
+                      style={styles.saveButton}
+                    >
                       Save
                     </button>
                     <button onClick={toggleEdit} style={styles.cancelButton}>
@@ -113,9 +136,15 @@ const ProfilePage = () => {
                 <strong>Role:</strong> {user.role}
               </div>
             </div>
-            <button onClick={handleLogout} style={styles.logoutButton}>
-              Logout
-            </button>
+            {loading ? (
+              <div style={styles.logoutButton}>
+                <Ellipsis color="white" size={40} />
+              </div>
+            ) : (
+              <button onClick={handleLogout} style={styles.logoutButton}>
+                Logout
+              </button>
+            )}
           </>
         ) : (
           <p>Loading...</p>
@@ -187,6 +216,9 @@ const styles = {
     borderRadius: "5px",
     cursor: "pointer",
     width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   input: {
     width: "100%",
