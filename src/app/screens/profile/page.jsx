@@ -2,9 +2,12 @@
 import { useState, useEffect } from "react";
 import supabase from "../../lib/supabaseClient";
 import { useRouter } from "next/navigation";
+import { Pencil } from 'lucide-react';
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [phone, setPhone] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -16,6 +19,7 @@ const ProfilePage = () => {
         const { user } = session;
         console.log("User sess]ion:", user);
         setUser(user);
+        setPhone(user.phone || "");
       } else {
         router.push("/screens/login");
       }
@@ -27,6 +31,26 @@ const ProfilePage = () => {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     router.push("/screens/login");
+  };
+
+  const handleUpdatePhone = async () => {
+    const { data, error } = await supabase.auth.updateUser({
+      phone: phone,
+    });
+    if (error) {
+      console.error("Error updating phone number:", error);
+    } else {
+      setUser(data.user);
+      setIsEditing(false);
+    }
+  };
+
+  const toggleEdit = () => {
+    setIsEditing(!isEditing);
+  };
+
+  const handlePhoneChange = (e) => {
+    setPhone(e.target.value);
   };
 
   const formatSignInTime = (time) => {
@@ -55,8 +79,35 @@ const ProfilePage = () => {
                 <strong>Last Sign In:</strong>{" "}
                 {formatSignInTime(user.last_sign_in_at)}
               </div>
-              <div style={styles.detailItem}>
-                <strong>Phone:</strong> {user.phone || "N/A"}
+              <div style={{...styles.detailItem, display: "flex", alignItems: "center"}}>
+                <strong>Phone:</strong>
+                <div style={{ marginLeft: "10px", width: "100%" }}>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    value={phone}
+                    onChange={handlePhoneChange}
+                    style={styles.input}
+                  />
+                ) : (
+                  <div style={{ display: "flex", alignItems: "center", flexDirection: "row" }}>
+                    <span>{phone || "N/A"}</span>
+                    <Pencil onClick={toggleEdit} size={20} style={{ cursor: "pointer", marginLeft: "10px" }} />
+                  </div>
+                )}
+                </div>
+              </div>
+              <div style={styles.buttonContainer}>
+                {isEditing && (
+                  <>
+                    <button onClick={handleUpdatePhone} style={styles.saveButton}>
+                      Save
+                    </button>
+                    <button onClick={toggleEdit} style={styles.cancelButton}>
+                      Cancel
+                    </button>
+                  </>
+                )}
               </div>
               <div style={styles.detailItem}>
                 <strong>Role:</strong> {user.role}
@@ -136,6 +187,34 @@ const styles = {
     borderRadius: "5px",
     cursor: "pointer",
     width: "100%",
+  },
+  input: {
+    width: "100%",
+    padding: "8px",
+    borderRadius: "4px",
+    border: "1px solid #ccc",
+  },
+  buttonContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    marginTop: "20px",
+  },
+  saveButton: {
+    backgroundColor: "#28a745",
+    color: "white",
+    border: "none",
+    padding: "10px 20px",
+    borderRadius: "5px",
+    cursor: "pointer",
+    marginRight: "10px",
+  },
+  cancelButton: {
+    backgroundColor: "#dc3545",
+    color: "white",
+    border: "none",
+    padding: "10px 20px",
+    borderRadius: "5px",
+    cursor: "pointer",
   },
 };
 

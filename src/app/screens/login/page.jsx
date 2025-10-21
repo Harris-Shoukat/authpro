@@ -1,14 +1,15 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import supabase from "../../lib/supabaseClient";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e, email, password) => {
     e.preventDefault();
@@ -56,14 +57,22 @@ export default function LoginPage() {
             required
             style={styles.input}
           />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={styles.input}
-          />
+          <div style={{ position: "relative" }}>
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              style={styles.input}
+            />
+            <div
+              style={{ position: "absolute", right: 10, top: 18, cursor: "pointer" }}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <Eye /> : <EyeOff />}
+            </div>
+          </div>
           <button type="submit" className="auth-button">
             Login
           </button>
@@ -89,7 +98,6 @@ const styles = {
     width: "100%",
     height: "100%",
     objectFit: "cover",
-    borderRadius: "0 20px 20px 0",
   },
   formContainer: {
     flex: 1,
@@ -111,6 +119,7 @@ const styles = {
     padding: "10px",
     margin: "8px 0",
     fontSize: "16px",
+    width: "100%",
   },
   button: {
     padding: "10px",

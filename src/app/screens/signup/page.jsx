@@ -1,17 +1,14 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import supabase from "../../lib/supabaseClient";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function SignupPage() {
   const router = useRouter();
   const [form, setForm] = useState({ email: "", password: "" });
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (token) router.push("/home");
-  // }, [router]);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSignup = async (e, form) => {
     e.preventDefault();
@@ -27,7 +24,7 @@ export default function SignupPage() {
     }
 
     alert("Signup successful! Check your email to confirm (if required).");
-    router.push("/login");
+    router.push("/screens/login");
   };
 
   return (
@@ -44,7 +41,7 @@ export default function SignupPage() {
       {/* Right side form */}
       <div style={styles.formContainer}>
         <h2>Sign Up</h2>
-  <form onSubmit={(e) => handleSignup(e, form)} style={styles.form}>
+        <form onSubmit={(e) => handleSignup(e, form)} style={styles.form}>
           <input
             type="email"
             placeholder="Email"
@@ -53,15 +50,25 @@ export default function SignupPage() {
             required
             style={styles.input}
           />
-          <input
-            type="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
-            required
-            style={styles.input}
-          />
-          <button type="submit" className="auth-button">Sign Up</button>
+          <div style={{ position: "relative" }}>
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={form.password}
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+              required
+              style={styles.input}
+            />
+            <div
+              style={{ position: "absolute", right: 10, top: 18, cursor: "pointer" }}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <Eye /> : <EyeOff />}
+            </div>
+          </div>
+          <button type="submit" className="auth-button">
+            Sign Up
+          </button>
         </form>
         <p style={{ marginTop: 10 }}>
           Already have an account? <Link href="/login">Login</Link>
@@ -84,7 +91,6 @@ const styles = {
     width: "100%",
     height: "100%",
     objectFit: "cover",
-    borderRadius: "0 20px 20px 0",
   },
   formContainer: {
     flex: 1,
@@ -106,6 +112,7 @@ const styles = {
     padding: "10px",
     margin: "8px 0",
     fontSize: "16px",
+    width: "100%",
   },
   button: {
     padding: "10px",
