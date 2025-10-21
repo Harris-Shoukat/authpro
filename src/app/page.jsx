@@ -1,8 +1,9 @@
+
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import HomePage from "./screens/home/page.jsx";
 import supabase from "./lib/supabaseClient.js";
+import HomePage from "./screens/home/page.jsx";
 
 export default function Home() {
   const router = useRouter();
@@ -16,7 +17,7 @@ export default function Home() {
       if (user) {
         setUser(user);
       } else {
-        router.push('/login');
+        router.push('/screens/login');
       }
       setLoading(false);
     }
