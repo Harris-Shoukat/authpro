@@ -1,10 +1,9 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useTheme } from "../context/ThemeContext"; // Import the theme hook
-
+import { useTheme } from "../context/ThemeContext";
 const HomePage = () => {
-  const { theme } = useTheme(); // Use theme context
+  const { theme } = useTheme();
 
   return (
     <div style={styles.container(theme)}>

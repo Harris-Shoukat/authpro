@@ -1,13 +1,12 @@
-// ThemeContext.js
+
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
 
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState("dark"); // Default to dark theme
-
-  // Optional: Persist theme in localStorage
+  const [theme, setTheme] = useState("dark"); 
+  
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") || "dark";
     setTheme(savedTheme);

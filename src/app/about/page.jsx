@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
-import { useTheme } from "../context/ThemeContext"; // Import the theme hook
+import { useTheme } from "../context/ThemeContext"; 
 
 const AboutPage = () => {
-  const { theme } = useTheme(); // Use theme context
+  const { theme } = useTheme();
 
   return (
     <div style={styles.container(theme)}>
@@ -74,7 +74,7 @@ const styles = {
   image: (theme) => ({
     maxWidth: "100%",
     height: "auto",
-    color: theme === "dark" ? "#00ff00" : "#00cc00", // Matches --coregreen from other components
+    color: theme === "dark" ? "#00ff00" : "#00cc00", 
   }),
 };
 

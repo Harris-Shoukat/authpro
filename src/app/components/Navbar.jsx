@@ -16,12 +16,12 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useScreenWidth from "../utils/useScreenWidth";
 import supabase from "../lib/supabaseClient";
-import { useTheme } from "../context/ThemeContext"; // Import the theme hook
+import { useTheme } from "../context/ThemeContext"; 
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
   const router = useRouter();
-  const { theme, toggleTheme } = useTheme(); // Use theme context
+  const { theme, toggleTheme } = useTheme();
   const screenWidth = useScreenWidth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -198,7 +198,6 @@ const Navbar = () => {
               </Link>
             </div>
           )}
-          {/* Theme toggle icon for mobile */}
           <button
             onClick={() => {
               toggleTheme();
@@ -268,7 +267,7 @@ const styles = {
     color: theme === "dark" ? "#fff" : "#000",
   }),
   loginSignupLink: (theme) => ({
-    color: theme === "dark" ? "var(--coregreen)" : "#222", // Replaced var(--coregreen) with explicit color
+    color: theme === "dark" ? "var(--coregreen)" : "#222", 
     textDecoration: "none",
     fontSize: "1rem",
     fontWeight: "bold",
@@ -324,7 +323,7 @@ const styles = {
     color: theme === "dark" ? "#fff" : "#000",
   }),
   mobileLoginSignupLink: (theme) => ({
-    color: "#00ff00", // Replaced var(--coregreen) with explicit color
+    color: "#00ff00", 
     textDecoration: "none",
     fontSize: "1rem",
     fontWeight: "bold",

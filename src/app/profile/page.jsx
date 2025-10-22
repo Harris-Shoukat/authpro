@@ -4,7 +4,7 @@ import supabase from "../lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import { Pencil } from "lucide-react";
 import { Ellipsis } from "react-css-spinners";
-import { useTheme } from "../context/ThemeContext"; // Import the theme hook
+import { useTheme } from "../context/ThemeContext";
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
@@ -12,7 +12,7 @@ const ProfilePage = () => {
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const { theme, toggleTheme } = useTheme(); // Use theme context
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -186,7 +186,7 @@ const styles = {
     width: "100px",
     height: "100px",
     borderRadius: "50%",
-    backgroundColor: theme === "dark" ? "#007bff" : "#007bff", // Matches --coregreen
+    backgroundColor: theme === "dark" ? "#007bff" : "#007bff", 
     color: "#fff",
     display: "flex",
     justifyContent: "center",

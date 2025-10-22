@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
-import { useTheme } from "../context/ThemeContext"; // Import the theme hook
+import { useTheme } from "../context/ThemeContext"; 
 
 const CategoryPage = () => {
-  const { theme } = useTheme(); // Use theme context
+  const { theme } = useTheme(); 
 
   const categories = [
     {
